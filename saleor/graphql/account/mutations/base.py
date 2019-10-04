@@ -100,7 +100,7 @@ class SetPassword(CreateToken):
     def handle_typed_errors(cls, errors: list):
         account_errors = [
             AccountError(field=e.field, message=e.message, code=code)
-            for e, code in errors
+            for e, code, _params in errors
         ]
         return cls(errors=[e[0] for e in errors], account_errors=account_errors)
 
@@ -387,7 +387,7 @@ class UserUpdateMeta(UpdateMetaBaseMutation):
         error_type_field = "account_errors"
 
 
-class UserClearStoredMeta(ClearMetaBaseMutation):
+class UserClearMeta(ClearMetaBaseMutation):
     class Meta:
         description = "Clear stored metadata value."
         model = models.User
